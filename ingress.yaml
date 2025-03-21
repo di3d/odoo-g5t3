@@ -1,0 +1,22 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: odoo-ingress
+  annotations:
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+spec:
+  rules:
+  - host: odoo.g5t3-k8s-cluster-dns-4njt9wva.hcp.southeastasia.azmk8s.io
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: odoo-service
+            port:
+              number: 80
+  tls:
+  - hosts:
+    - odoo.g5t3-k8s-cluster-dns-4njt9wva.hcp.southeastasia.azmk8s.io
+    secretName: odoo-tls
